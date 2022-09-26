@@ -17,15 +17,22 @@ const Meal = () => {
         if (!existedMeal) {
             const newFavMeal = [...favMeal,mealSelected];
             setFavMeal(newFavMeal);
+            localStorage.setItem('favmeal', JSON.stringify(favMeal));
         }
 
         
-    }
+    };
+
+    useEffect(()=>{
+        const storedMeal = JSON.parse(localStorage.getItem('favmeal'));
+        setFavMeal(storedMeal);
+       
+    },[meals])
 
     useEffect(()=>{
         // ** loader function
         const loadMeals = async()=>{
-            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=a`);
+            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=t`);
             response.ok ? console.log('successful') : console.log('failed');
             const data = await response.json();
             setMeals(data.meals);

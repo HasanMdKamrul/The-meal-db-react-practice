@@ -7,7 +7,7 @@ const FavMeal = ({favMeal}) => {
    
     return (
         <div>
-            <h1>Fav Meals</h1>
+            <h1 className='font-semibold text-3xl mb-5'>Fav Meals</h1>
             {
                 favMeal.map(meal => <MealView meal={meal} key={meal.idMeal}></MealView>)
             }

@@ -1,6 +1,7 @@
 import React from 'react';
 
-const MealView = ({meal:{strMeal,}}) => {
+const MealView = ({meal,meal:{strMeal,}}) => {
+    console.log(meal)
     return (
         <div>
             <ul>
