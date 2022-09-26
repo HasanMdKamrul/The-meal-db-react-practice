@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MealCard = ({meal:{strArea,strInstructions,strMeal,strMealThumb}}) => {
+const MealCard = ({handleAddToFavorite,meal,meal:{strArea,strInstructions,strMeal,strMealThumb}}) => {
     
     return (
         <div >
@@ -11,7 +11,7 @@ const MealCard = ({meal:{strArea,strInstructions,strMeal,strMealThumb}}) => {
                     <strong> <small>{strInstructions.length > 100 ? strInstructions.slice(0,100) + '...': strInstructions}</small> </strong>
                     <p> <small>{strArea}</small> </p>
                     <div className="card-actions justify-center">
-                        <button className="btn btn-primary">Add to Favorite</button>
+                        <button onClick={()=> handleAddToFavorite(meal)} className="btn btn-primary">Add to Favorite</button>
                     </div>
                 </div>
             </div>
