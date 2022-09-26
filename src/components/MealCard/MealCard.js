@@ -5,12 +5,13 @@ const MealCard = ({meal:{strArea,strInstructions,strMeal,strMealThumb}}) => {
     return (
         <div >
             <div className="card card-side bg-base-100 shadow-xl">
-                <figure><img src={strMealThumb} alt="Movie"/></figure>
+                <figure><img src={strMealThumb} className="h-full" alt="Movie"/></figure>
                 <div className="card-body">
-                    <h2 className="card-title">New movie is released!</h2>
-                    <p>Click the button to watch on Jetflix app.</p>
-                    <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Watch</button>
+                    <h2 className="card-title">{strMeal}</h2>
+                    <strong> <small>{strInstructions.length > 100 ? strInstructions.slice(0,100) + '...': strInstructions}</small> </strong>
+                    <p> <small>{strArea}</small> </p>
+                    <div className="card-actions justify-center">
+                        <button className="btn btn-primary">Add to Favorite</button>
                     </div>
                 </div>
             </div>
