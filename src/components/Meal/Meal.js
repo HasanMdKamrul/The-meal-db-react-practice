@@ -1,33 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import FavMeal from '../FavMeal/FavMeal';
 import MealCard from '../MealCard/MealCard';
+import { getDataFromLs, setDataToLs } from '../utilities/manageDb';
 
 const Meal = () => {
     // ** getting the meal data
 
     const [meals,setMeals] = useState([]);
-    const [favMeal,setFavMeal] = useState([])
-
-    // ** handleAddToFavorite
-
-    const handleAddToFavorite = mealSelected => {
-
-        const existedMeal = favMeal.find(meal => meal.idMeal === mealSelected.idMeal);
-
-        if (!existedMeal) {
-            const newFavMeal = [...favMeal,mealSelected];
-            setFavMeal(newFavMeal);
-            localStorage.setItem('favmeal', JSON.stringify(favMeal));
-        }
-
-        
-    };
-
-    useEffect(()=>{
-        const storedMeal = JSON.parse(localStorage.getItem('favmeal'));
-        setFavMeal(storedMeal);
-       
-    },[meals])
+    const [favMeal,setFavMeal] = useState([]);
 
     useEffect(()=>{
         // ** loader function
@@ -39,6 +19,53 @@ const Meal = () => {
         };
         loadMeals()
     },[]);
+
+
+    // ** handleAddToFavorite
+
+    const handleAddToFavorite = mealSelected => {
+
+        const existedFavMeal = favMeal.find(meal => meal.idMeal === mealSelected.idMeal);
+
+        let newFav = [];
+
+        if (!existedFavMeal) {
+            mealSelected['quantity'] = 1;
+            newFav = [...favMeal, mealSelected];
+            setDataToLs(mealSelected.idMeal);
+          
+        } else{
+            const restFav = favMeal.filter(meal => meal.idMeal !== mealSelected.idMeal);
+            existedFavMeal["quantity"] = existedFavMeal["quantity"] + 1;
+            newFav = [...restFav, existedFavMeal];
+            setDataToLs(mealSelected.idMeal);
+        };
+        setFavMeal(newFav);
+    };
+
+    // ** get data from ls 
+
+
+    useEffect(()=>{
+        const storedItems = getDataFromLs();
+
+        const newMeals = [];
+        
+        for (const key in storedItems) {
+            
+            const addedProductsTols = meals.find(meal => meal.idMeal === key);
+            
+            if (addedProductsTols) {
+                addedProductsTols["quantity"] = storedItems[key];
+                // setFavMeal(addedProductsTols);
+                newMeals.push(addedProductsTols);
+            } 
+        };
+
+        setFavMeal(newMeals);
+
+    },[meals])
+
 
     
 
